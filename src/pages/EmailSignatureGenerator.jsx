@@ -85,47 +85,68 @@ export default function EmailSignatureGenerator() {
       <table cellPadding="0" cellSpacing="0" style={{ fontFamily: 'Arial, sans-serif', fontSize: '14px', lineHeight: '1.6', color: '#333', background: 'transparent' }}>
         <tbody>
           <tr>
+            {/* Profile Image */}
             <td style={{ paddingRight: '20px', verticalAlign: 'top', background: 'transparent' }}>
               <img 
-                width="100"
-                height="100"
                 src={imageBase64} 
                 alt="Profile" 
+                width="100"
+                height="100"
                 style={{ width: '100px', height: '100px', borderRadius: '50%', border: `3px solid ${selectedColor}`, display: 'block', background: 'transparent' }}
               />
             </td>
+
+            {/* User Info */}
             <td style={{ verticalAlign: 'top', background: 'transparent' }}>
-              <div style={{ fontSize: '18px', fontWeight: '600', color: selectedColor, marginBottom: '8px', background: 'transparent' }}>
+              <div style={{ fontSize: '18px', fontWeight: 600, color: selectedColor, marginBottom: '8px', background: 'transparent' }}>
                 {name}
               </div>
+
               {location && (
                 <div style={{ fontSize: '13px', color: '#666', marginBottom: '8px', background: 'transparent' }}>
                   {location}
                 </div>
               )}
-              <div style={{ height: '2px', background: selectedColor, width: '60px', marginBottom: '12px' }}></div>
+
+              <div style={{ height: '2px', background: selectedColor, width: '60px', marginBottom: '12px' }} />
+
               <div style={{ margin: '4px 0', background: 'transparent' }}>
                 <span style={{ color: selectedColor }}>✉</span>{' '}
                 <a href={`mailto:${email}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }}>
                   {email}
                 </a>
               </div>
+
               <div style={{ margin: '4px 0', background: 'transparent' }}>
                 <span style={{ color: selectedColor }}>☎</span>{' '}
                 <a href={`tel:${phone.replace(/\s/g, '')}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }}>
                   {phone}
                 </a>
               </div>
+
               {facebook && (
                 <div style={{ margin: '4px 0', background: 'transparent' }}>
-                  <FacebookIcon />
-                  <a href={`https://${facebook.replace(/^https?:\/\//, '')}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }} target="_blank" rel="noopener noreferrer">
+                  <img 
+                    src="/path-to-facebook-icon.png" 
+                    alt="Facebook" 
+                    width="14" 
+                    height="14" 
+                    style={{ width: '14px', height: '14px', display: 'inline-block', verticalAlign: 'middle' }} 
+                  />
+                  <a 
+                    href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
+                    style={{ color: '#555', textDecoration: 'none', background: 'transparent', verticalAlign: 'middle' }} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
                     &nbsp;{facebook}
                   </a>
                 </div>
               )}
             </td>
-            <td style={{ verticalAlign: 'top', background: 'transparent' }}>
+
+            {/* Company Logo */}
+            <td style={{ verticalAlign: 'top', background: 'transparent', paddingLeft: '20px' }}>
               <img 
                 src={VmoLogo} 
                 alt="Logo" 
@@ -137,10 +158,13 @@ export default function EmailSignatureGenerator() {
           </tr>
         </tbody>
       </table>
+
+      {/* Disclaimer */}
       <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #e0e0e0', fontSize: '11px', color: '#888', lineHeight: '1.5', maxWidth: '500px', background: 'transparent' }}>
         <strong>CONFIDENTIALITY NOTICE:</strong> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you are not the intended recipient, please notify the sender immediately and delete this email. Any unauthorized review, use, disclosure, or distribution is prohibited.
       </div>
     </div>
+
   ) : null;
 
   return (
