@@ -87,6 +87,8 @@ export default function EmailSignatureGenerator() {
           <tr>
             <td style={{ paddingRight: '20px', verticalAlign: 'top', background: 'transparent' }}>
               <img 
+                width="100"
+                height="100"
                 src={imageBase64} 
                 alt="Profile" 
                 style={{ width: '100px', height: '100px', borderRadius: '50%', border: `3px solid ${selectedColor}`, display: 'block', background: 'transparent' }}
@@ -127,6 +129,8 @@ export default function EmailSignatureGenerator() {
               <img 
                 src={VmoLogo} 
                 alt="Logo" 
+                width="64"
+                height="64"
                 style={{ width: '64px', height: '64px', display: 'block', background: 'transparent' }}
               />
             </td>
