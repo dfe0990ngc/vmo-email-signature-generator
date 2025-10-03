@@ -3,7 +3,6 @@ import { Upload, Copy, CheckCircle, Mail, Phone, Facebook } from 'lucide-react';
 import VmoLogo from '../assets/OVM-Logo - Green - Approved.png';
 import VmoLogoOrig from '../assets/OVM-Logo.png';
 import SBLogo from '../assets/sb-logo.png';
-import FBIcon from  '../assets/fb-icon.png';
 
 export default function EmailSignatureGenerator() {
   const [imageBase64, setImageBase64] = useState(null);
@@ -117,13 +116,7 @@ export default function EmailSignatureGenerator() {
 
               {facebook && (
                 <div style={{ margin: '4px 0', background: 'transparent' }}>
-                  <img 
-                    src={FBIcon} 
-                    alt="Facebook" 
-                    width="14" 
-                    height="14" 
-                    style={{ width: '14px', height: '14px', display: 'inline-block', verticalAlign: 'middle' }} 
-                  />
+                  <span style={{ color: selectedColor, fontSize:'18px' }}>🅕</span>{' '}
                   <a 
                     href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
                     style={{ color: '#555', textDecoration: 'none', background: 'transparent', verticalAlign: 'middle' }} 
@@ -347,67 +340,46 @@ export default function EmailSignatureGenerator() {
 
         {/* Instructions */}
         <div className="bg-amber-50 shadow-md p-8 border-amber-500 border-l-4 rounded-lg">
-          <h2 className="mb-4 font-bold text-gray-800 text-xl">📋 How to Add to Gmail Signature:</h2>
+          <h2 className="mb-4 font-bold text-gray-800 text-xl">📋 How to Use Your Signature:</h2>
           
           <div className="space-y-6">
             <div>
-              <h3 className="mb-2 font-semibold text-gray-700">Step 1: Access Gmail Settings</h3>
+              <h3 className="mb-2 font-semibold text-gray-700">Step 1: Enter Your Details</h3>
               <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside">
-                <li>Open Gmail in your web browser</li>
-                <li>Click the <strong>Settings gear icon</strong> (top right)</li>
-                <li>Click <strong>"See all settings"</strong></li>
+                <li>Fill in your name, email, phone, and other details</li>
+                <li>Upload your profile photo (recommended size: <strong>400px × 400px</strong>)</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="mb-2 font-semibold text-gray-700">Step 2: Navigate to Signature Section</h3>
+              <h3 className="mb-2 font-semibold text-gray-700">Step 2: Generate Your Signature</h3>
               <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside">
-                <li>Stay on the <strong>"General"</strong> tab</li>
-                <li>Scroll down to the <strong>"Signature"</strong> section</li>
-                <li>Click <strong>"+ Create new"</strong> button</li>
-                <li>Give your signature a name (e.g., "Official")</li>
+                <li>Click the <strong>"Generate Signature"</strong> button</li>
+                <li>Preview your signature with your details and photo</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="mb-2 font-semibold text-gray-700">Step 3: Paste Your Signature</h3>
+              <h3 className="mb-2 font-semibold text-gray-700">Step 3: Copy and Paste</h3>
               <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside">
-                <li>Click <strong>"Copy Signature HTML"</strong> button above</li>
-                <li>In the signature text box, press <strong>Ctrl+V</strong> (Windows) or <strong>Cmd+V</strong> (Mac)</li>
-                <li>Your signature with image should appear instantly</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="mb-2 font-semibold text-gray-700">Step 4: Configure Signature Settings</h3>
-              <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside">
-                <li>Under <strong>"Signature defaults"</strong>, select your new signature</li>
-                <li>Choose when to insert: <strong>"For new emails"</strong> and/or <strong>"On reply/forward"</strong></li>
-                <li>Scroll to the bottom and click <strong>"Save Changes"</strong></li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="mb-2 font-semibold text-gray-700">Step 5: Test Your Signature</h3>
-              <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside">
-                <li>Click <strong>"Compose"</strong> to start a new email</li>
-                <li>Your signature should automatically appear at the bottom</li>
-                <li>Send yourself a test email to see how it looks</li>
+                <li>Click <strong>"Copy Signature"</strong></li>
+                <li>Go to Gmail and compose a new email</li>
+                <li>Paste the signature <strong>directly below your email body</strong></li>
               </ul>
             </div>
 
             <div className="bg-white mt-4 p-4 border border-amber-200 rounded">
-              <h3 className="mb-2 font-semibold text-gray-700">⚠️ Troubleshooting Tips:</h3>
+              <h3 className="mb-2 font-semibold text-gray-700">ℹ️ Important Notes:</h3>
               <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside">
-                <li><strong>Gray background appears:</strong> Try manually selecting and copying the preview instead of using the button</li>
-                <li><strong>Image doesn't show:</strong> Make sure you generated the signature after uploading the image</li>
-                <li><strong>Formatting looks weird:</strong> Gmail may add its own styles. Try clearing any existing signature first</li>
-                <li><strong>Can't paste:</strong> Use Ctrl+V (or Cmd+V on Mac) directly in the signature box</li>
-                <li><strong>Manually Add to Email Body:</strong> Click <strong>Copy Signature HTML</strong> button and paste it below your email body.</li>
+                <li><strong>Do not use Gmail Settings signature editor</strong> – the look may change due to Gmail’s formatting.</li>
+                <li>Always paste the signature <strong>manually</strong> when sending emails.</li>
+                <li>If you’ve already used it before, you can also copy the signature from your <strong>previously sent emails</strong> instead of regenerating.</li>
+                <li>For best results, keep your photo <strong>square (400×400px)</strong> so it looks clean in Gmail.</li>
               </ul>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );
