@@ -82,7 +82,7 @@ export default function EmailSignatureGenerator() {
                 alt="Profile" 
                 width="150"
                 height="150"
-                style={{ width: '150px', height: '150px', borderRadius: '50%', border: `3px solid ${selectedColor}`, display: 'block', background: 'transparent' }}
+                style={{ width: '150px', height: '150px', display: 'block', background: 'transparent' }}
               />
             </td>
 
