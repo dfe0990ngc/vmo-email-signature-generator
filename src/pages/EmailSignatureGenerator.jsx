@@ -138,7 +138,7 @@ export default function EmailSignatureGenerator() {
         </tbody>
       </table>
       <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #e0e0e0', fontSize: '11px', color: '#888', lineHeight: '1.5', maxWidth: '500px', background: 'transparent' }}>
-        <strong>CONFIDENTIALITY NOTICE:</strong> This email is confidential and for the intended recipient only. Unauthorized access, use, or disclosure is prohibited.
+        <strong>CONFIDENTIALITY NOTICE:</strong> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you are not the intended recipient, please notify the sender immediately and delete this email. Any unauthorized review, use, disclosure, or distribution is prohibited.
       </div>
     </div>
   ) : null;
