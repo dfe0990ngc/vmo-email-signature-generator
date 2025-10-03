@@ -251,7 +251,7 @@ export default function EmailSignatureGenerator() {
             <label className="block mb-3 font-medium text-gray-700 text-sm">
               Brand Color
             </label>
-            <div className="flex gap-4">
+            <div className="flex sm:flex-row flex-col gap-4">
               {colorOptions.map((color) => (
                 <button
                   key={color.value}
@@ -327,9 +327,9 @@ export default function EmailSignatureGenerator() {
 
         {/* Preview Section */}
         {isGenerated && (
-          <div className="bg-white shadow-md mb-6 p-8 rounded-lg">
+          <div className="bg-white shadow-md mb-6 p-8 rounded-lg overflow-x-auto">
             <h2 className="mb-4 font-semibold text-gray-800 text-xl">Preview:</h2>
-            <div className="bg-transparent p-6 border-2 border-gray-300 border-dashed rounded-lg">
+            <div className="bg-transparent p-6 border-2 border-gray-300 border-dashed rounded-lg min-w-[500px]">
               {signatureHTML}
             </div>
             <p className="mt-4 text-gray-500 text-sm">
