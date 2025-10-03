@@ -3,6 +3,7 @@ import { Upload, Copy, CheckCircle, Mail, Phone, Facebook } from 'lucide-react';
 import VmoLogo from '../assets/OVM-Logo - Green - Approved.png';
 import VmoLogoOrig from '../assets/OVM-Logo.png';
 import SBLogo from '../assets/sb-logo.png';
+import VMOSB from '../assets/fb-cover-WITH-SB-LOGO-Left-Right-wrapped.png';
 
 export default function EmailSignatureGenerator() {
   const [imageBase64, setImageBase64] = useState(null);
@@ -82,7 +83,7 @@ export default function EmailSignatureGenerator() {
                 alt="Profile" 
                 width="130"
                 height="130"
-                style={{ width: '130px', height: '130px', display: 'block', background: 'transparent' }}
+                style={{ width: '130px', height: '130px', display: 'block', background: 'transparent',minWidth:'130px' }}
               />
             </td>
 
@@ -116,7 +117,7 @@ export default function EmailSignatureGenerator() {
 
               {facebook && (
                 <div style={{ margin: '0px 0', background: 'transparent' }}>
-                  <span style={{ color: selectedColor, fontSize:'16px' }}>🅕</span>{' '}
+                  <span style={{ color: selectedColor, fontSize:'14px' }}>🅕</span>{' '}
                   <a 
                     href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
                     style={{ color: '#555', textDecoration: 'none', background: 'transparent', verticalAlign: 'middle' }} 
@@ -128,29 +129,7 @@ export default function EmailSignatureGenerator() {
                 </div>
               )}
             </td>
-            <td style={{ verticalAlign: 'top', background: 'transparent', paddingLeft:'20px' }}>
-              {/* <table width="100%" border={0}>
-                <tr>
-                  <td>
-                    <img 
-                      src={VmoLogo} 
-                      alt="Logo" 
-                      width="48"
-                      height="48"
-                      style={{ width: '48px', height: '48px', display: 'block', background: 'transparent' }}
-                    />
-                  </td>
-                  <td>
-                    <img 
-                      src={SBLogo} 
-                      alt="SB Logo" 
-                      width="52"
-                      height="56"
-                      style={{ width: '52px', height: '56px', display: 'block', background: 'transparent' }}
-                    />
-                  </td>
-                </tr>
-              </table> */}
+            {/* <td style={{ verticalAlign: 'top', background: 'transparent', paddingLeft:'20px' }}>
               <table align="center" border={0}>
                 <tr>
                   <td>
@@ -173,13 +152,22 @@ export default function EmailSignatureGenerator() {
                   </td>
                 </tr>
               </table>
-            </td>
+            </td> */}
           </tr>
         </tbody>
       </table>
-
+                
       {/* Disclaimer */}
-      <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #e0e0e0', fontSize: '11px', color: '#888', lineHeight: '1.5', maxWidth: '500px', background: 'transparent' }}>
+      <div style={{ marginTop: '8px', borderTop: '1px solid #e0e0e0', fontSize: '10px', color: '#888', lineHeight: '1.5', maxWidth: '500px', background: 'transparent' }}>
+        {/* VMO & SB */}
+        <img 
+          src={VMOSB} 
+          alt="Logo" 
+          width="100%"
+          height="auto"
+          style={{ maxWidth: '500px', background: 'transparent', marginTop: '8px', marginBottom:'8px' }}
+        />
+        
         <strong>CONFIDENTIALITY NOTICE:</strong> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you are not the intended recipient, please notify the sender immediately and delete this email. Any unauthorized review, use, disclosure, or distribution is prohibited.
       </div>
     </div>
