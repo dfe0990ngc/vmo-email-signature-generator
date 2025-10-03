@@ -128,7 +128,7 @@ export default function EmailSignatureGenerator() {
                 </div>
               )}
             </td>
-            <td style={{ verticalAlign: 'top', background: 'transparent' }}>
+            <td style={{ verticalAlign: 'top', background: 'transparent', paddingLeft:'20px' }}>
               {/* <table width="100%" border={0}>
                 <tr>
                   <td>
