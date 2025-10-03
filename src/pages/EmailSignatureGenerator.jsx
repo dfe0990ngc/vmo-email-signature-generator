@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Upload, Copy, CheckCircle, Mail, Phone, Facebook } from 'lucide-react';
 import VmoLogo from '../assets/OVM-Logo - Green - Approved.png';
+import FBIcon from  '../assets/fb-icon.png';
 
 export default function EmailSignatureGenerator() {
   const [imageBase64, setImageBase64] = useState(null);
@@ -68,18 +69,6 @@ export default function EmailSignatureGenerator() {
     document.body.removeChild(tempDiv);
   };
 
-  const FacebookIcon = () => (
-    <svg 
-      width="14" 
-      height="14" 
-      viewBox="0 0 24 24" 
-      fill={selectedColor}
-      style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '2px' }}
-    >
-      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-    </svg>
-  );
-
   const signatureHTML = imageBase64 ? (
     <div ref={signatureRef} style={{ background: 'transparent' }}>
       <table cellPadding="0" cellSpacing="0" style={{ fontFamily: 'Arial, sans-serif', fontSize: '14px', lineHeight: '1.6', color: '#333', background: 'transparent' }}>
@@ -126,7 +115,13 @@ export default function EmailSignatureGenerator() {
 
               {facebook && (
                 <div style={{ margin: '4px 0', background: 'transparent' }}>
-                  <FacebookIcon />
+                  <img 
+                    src={FBIcon} 
+                    alt="Facebook" 
+                    width="14" 
+                    height="14" 
+                    style={{ width: '14px', height: '14px', display: 'inline-block', verticalAlign: 'middle' }} 
+                  />
                   <a 
                     href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
                     style={{ color: '#555', textDecoration: 'none', background: 'transparent', verticalAlign: 'middle' }} 
@@ -393,6 +388,7 @@ export default function EmailSignatureGenerator() {
                 <li><strong>Image doesn't show:</strong> Make sure you generated the signature after uploading the image</li>
                 <li><strong>Formatting looks weird:</strong> Gmail may add its own styles. Try clearing any existing signature first</li>
                 <li><strong>Can't paste:</strong> Use Ctrl+V (or Cmd+V on Mac) directly in the signature box</li>
+                <li><strong>Manually Add to Email Body:</strong> Click <strong>Copy Signature HTML</strong> button and paste it below your email body.</li>
               </ul>
             </div>
           </div>
