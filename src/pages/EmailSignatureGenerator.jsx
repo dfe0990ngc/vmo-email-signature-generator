@@ -80,9 +80,9 @@ export default function EmailSignatureGenerator() {
               <img 
                 src={imageBase64} 
                 alt="Profile" 
-                width="100"
-                height="100"
-                style={{ width: '100px', height: '100px', display: 'block', background: 'transparent' }}
+                width="130"
+                height="130"
+                style={{ width: '130px', height: '130px', display: 'block', background: 'transparent' }}
               />
             </td>
 
