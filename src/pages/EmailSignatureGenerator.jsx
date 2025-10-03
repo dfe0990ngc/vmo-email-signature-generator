@@ -88,12 +88,12 @@ export default function EmailSignatureGenerator() {
 
             {/* User Info */}
             <td style={{ verticalAlign: 'top', background: 'transparent' }}>
-              <div style={{ fontSize: '18px', fontWeight: 600, color: selectedColor, marginBottom: '8px', background: 'transparent' }}>
+              <div style={{ fontSize: '18px', fontWeight: 600, color: selectedColor, marginBottom: '0px', background: 'transparent' }}>
                 {name}
               </div>
 
               {location && (
-                <div style={{ fontSize: '13px', color: '#666', marginBottom: '8px', background: 'transparent' }}>
+                <div style={{ fontWeight:'bold', fontSize: '13px', color: '#666', marginBottom: '0px', background: 'transparent' }}>
                   {location}
                 </div>
               )}
@@ -107,7 +107,7 @@ export default function EmailSignatureGenerator() {
                 </a>
               </div>
 
-              <div style={{ margin: '4px 0', background: 'transparent' }}>
+              <div style={{ margin: '0px 0', background: 'transparent' }}>
                 <span style={{ color: selectedColor }}>☎</span>{' '}
                 <a href={`tel:${phone.replace(/\s/g, '')}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }}>
                   {phone}
@@ -115,7 +115,7 @@ export default function EmailSignatureGenerator() {
               </div>
 
               {facebook && (
-                <div style={{ margin: '4px 0', background: 'transparent' }}>
+                <div style={{ margin: '0px 0', background: 'transparent' }}>
                   <span style={{ color: selectedColor, fontSize:'16px' }}>🅕</span>{' '}
                   <a 
                     href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
@@ -217,7 +217,7 @@ export default function EmailSignatureGenerator() {
 
             <div>
               <label className="block mb-2 font-medium text-gray-700 text-sm">
-                Location (Optional)
+                Position/Location (Optional)
               </label>
               <input
                 type="text"
