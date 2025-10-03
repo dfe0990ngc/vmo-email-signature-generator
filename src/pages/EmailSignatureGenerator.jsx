@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Upload, Copy, CheckCircle, Mail, Phone, Facebook } from 'lucide-react';
 import VmoLogo from '../assets/OVM-Logo - Green - Approved.png';
+import SBLogo from '../assets/sb-logo.png';
 import FBIcon from  '../assets/fb-icon.png';
 
 export default function EmailSignatureGenerator() {
@@ -79,9 +80,9 @@ export default function EmailSignatureGenerator() {
               <img 
                 src={imageBase64} 
                 alt="Profile" 
-                width="100"
-                height="100"
-                style={{ width: '100px', height: '100px', borderRadius: '50%', border: `3px solid ${selectedColor}`, display: 'block', background: 'transparent' }}
+                width="150"
+                height="150"
+                style={{ width: '150px', height: '150px', borderRadius: '50%', border: `3px solid ${selectedColor}`, display: 'block', background: 'transparent' }}
               />
             </td>
 
@@ -133,16 +134,29 @@ export default function EmailSignatureGenerator() {
                 </div>
               )}
             </td>
-
-            {/* Company Logo */}
-            <td style={{ verticalAlign: 'top', background: 'transparent', paddingLeft: '20px' }}>
-              <img 
-                src={VmoLogo} 
-                alt="Logo" 
-                width="64"
-                height="64"
-                style={{ width: '64px', height: '64px', display: 'block', background: 'transparent' }}
-              />
+            <td style={{ verticalAlign: 'top', background: 'transparent' }}>
+              <table width="100%" border={0}>
+                <tr>
+                  <td>
+                    <img 
+                      src={VmoLogo} 
+                      alt="Logo" 
+                      width="48"
+                      height="48"
+                      style={{ width: '48px', height: '48px', display: 'block', background: 'transparent' }}
+                    />
+                  </td>
+                  <td>
+                    <img 
+                      src={SBLogo} 
+                      alt="SB Logo" 
+                      width="52"
+                      height="56"
+                      style={{ width: '52px', height: '56px', display: 'block', background: 'transparent' }}
+                    />
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </tbody>
