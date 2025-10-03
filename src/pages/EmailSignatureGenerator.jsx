@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Upload, Copy, CheckCircle, Mail, Phone, Facebook } from 'lucide-react';
 import VmoLogo from '../assets/OVM-Logo - Green - Approved.png';
+import VmoLogoOrig from '../assets/OVM-Logo.png';
 import SBLogo from '../assets/sb-logo.png';
 import FBIcon from  '../assets/fb-icon.png';
 
@@ -178,7 +179,7 @@ export default function EmailSignatureGenerator() {
           <h1 className="mb-2 font-bold text-3xl" style={{ color: selectedColor }}>📧 VMO - Email Signature Generator</h1>
           <p className="text-gray-600">Create a professional email signature for Gmail</p>
 
-          <img src={VmoLogo} alt="Logo" className="top-4 right-4 sm:right-8 absolute w-16 sm:w-24 h-16 sm:h-24" />
+          <img src={VmoLogoOrig} alt="Logo" className="top-4 right-4 sm:right-8 absolute w-16 sm:w-24 h-16 sm:h-24" />
         </div>
 
         {/* Content Editor Section */}
