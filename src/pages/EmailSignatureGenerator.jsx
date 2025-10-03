@@ -72,7 +72,7 @@ export default function EmailSignatureGenerator() {
 
   const signatureHTML = imageBase64 ? (
     <div ref={signatureRef} style={{ background: 'transparent' }}>
-      <table cellPadding="0" cellSpacing="0" style={{ fontFamily: 'Arial, sans-serif', fontSize: '14px', lineHeight: '1.6', color: '#333', background: 'transparent' }}>
+      <table cellPadding="0" cellSpacing="0" style={{ fontFamily: 'Arial, sans-serif', fontSize: '12px', lineHeight: '1.6', color: '#333', background: 'transparent' }}>
         <tbody>
           <tr>
             {/* Profile Image */}
@@ -80,9 +80,9 @@ export default function EmailSignatureGenerator() {
               <img 
                 src={imageBase64} 
                 alt="Profile" 
-                width="150"
-                height="150"
-                style={{ width: '150px', height: '150px', display: 'block', background: 'transparent' }}
+                width="100"
+                height="100"
+                style={{ width: '100px', height: '100px', display: 'block', background: 'transparent' }}
               />
             </td>
 
@@ -116,20 +116,20 @@ export default function EmailSignatureGenerator() {
 
               {facebook && (
                 <div style={{ margin: '4px 0', background: 'transparent' }}>
-                  <span style={{ color: selectedColor, fontSize:'18px' }}>🅕</span>{' '}
+                  <span style={{ color: selectedColor, fontSize:'16px' }}>🅕</span>{' '}
                   <a 
                     href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
                     style={{ color: '#555', textDecoration: 'none', background: 'transparent', verticalAlign: 'middle' }} 
                     target="_blank" 
                     rel="noopener noreferrer"
                   >
-                    &nbsp;{facebook}
+                    {facebook}
                   </a>
                 </div>
               )}
             </td>
             <td style={{ verticalAlign: 'top', background: 'transparent' }}>
-              <table width="100%" border={0}>
+              {/* <table width="100%" border={0}>
                 <tr>
                   <td>
                     <img 
@@ -147,6 +147,28 @@ export default function EmailSignatureGenerator() {
                       width="52"
                       height="56"
                       style={{ width: '52px', height: '56px', display: 'block', background: 'transparent' }}
+                    />
+                  </td>
+                </tr>
+              </table> */}
+              <table align="center" border={0}>
+                <tr>
+                  <td>
+                    <img 
+                      src={VmoLogo} 
+                      alt="Logo" 
+                      width="32"
+                      height="32"
+                      style={{ width: '32px', height: '32px', display: 'block', background: 'transparent' }}
+                    />
+                  </td>
+                  <td>
+                    <img 
+                      src={SBLogo} 
+                      alt="SB Logo" 
+                      width="36"
+                      height="42"
+                      style={{ width: '36px', height: '42px', display: 'block', background: 'transparent' }}
                     />
                   </td>
                 </tr>
