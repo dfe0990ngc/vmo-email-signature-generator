@@ -126,13 +126,7 @@ export default function EmailSignatureGenerator() {
 
               {facebook && (
                 <div style={{ margin: '4px 0', background: 'transparent' }}>
-                  <img 
-                    src="/path-to-facebook-icon.png" 
-                    alt="Facebook" 
-                    width="14" 
-                    height="14" 
-                    style={{ width: '14px', height: '14px', display: 'inline-block', verticalAlign: 'middle' }} 
-                  />
+                  <FacebookIcon />
                   <a 
                     href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
                     style={{ color: '#555', textDecoration: 'none', background: 'transparent', verticalAlign: 'middle' }} 
