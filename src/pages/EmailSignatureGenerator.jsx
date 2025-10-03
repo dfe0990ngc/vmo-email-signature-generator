@@ -148,7 +148,7 @@ export default function EmailSignatureGenerator() {
 
               <div style={{ height: '2px', background: selectedColor, width: '60px', marginBottom: '12px' }} />
 
-              <div style={{ margin: '4px 0', background: 'transparent' }}>
+              <div style={{ margin: '0px 0', background: 'transparent' }}>
                 <span style={{ color: selectedColor }}>✉</span>{' '}
                 <a href={`mailto:${email}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }}>
                   {email}
@@ -156,7 +156,7 @@ export default function EmailSignatureGenerator() {
               </div>
 
               <div style={{ margin: '0px 0', background: 'transparent' }}>
-                <span style={{ color: selectedColor }}>☎</span>{' '}
+                <span style={{ color: selectedColor }}>📞</span>{' '}
                 <a href={`tel:${phone.replace(/\s/g, '')}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }}>
                   {phone}
                 </a>
@@ -164,7 +164,7 @@ export default function EmailSignatureGenerator() {
 
               {facebook && (
                 <div style={{ margin: '0px 0', background: 'transparent' }}>
-                  <span style={{ color: selectedColor, fontSize:'14px' }}>🅕</span>{' '}
+                  <span style={{ color: selectedColor, fontWeight:'bold' }}>🌐</span>{' '}
                   <a 
                     href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
                     style={{ color: '#555', textDecoration: 'none', background: 'transparent', verticalAlign: 'middle' }} 
@@ -230,7 +230,7 @@ export default function EmailSignatureGenerator() {
             <h1 className="mb-2 font-bold text-xl sm:text-2xl lg:text-3xl leading-tight" style={{ color: selectedColor }}>📧 VMO - Email Signature Generator</h1>
             <p className="text-gray-600 text-sm sm:text-base">Create a professional email signature for Gmail</p>
           </div>
-          <img src={VmoLogoOrig} alt="Logo" className="top-3 right-3 sm:top-4 sm:right-4 lg:right-8 absolute w-12 sm:w-16 lg:w-24 h-12 sm:h-16 lg:h-24" />
+          <img src={VmoLogoOrig} alt="Logo" className="top-3 sm:top-4 right-3 sm:right-4 lg:right-8 absolute w-12 sm:w-16 lg:w-24 h-12 sm:h-16 lg:h-24" />
         </div>
 
         {/* Content Editor Section */}
@@ -246,7 +246,7 @@ export default function EmailSignatureGenerator() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full text-base sm:text-sm"
+                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full sm:text-sm text-base"
                 placeholder="Legislative Department"
               />
             </div>
@@ -259,7 +259,7 @@ export default function EmailSignatureGenerator() {
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full text-base sm:text-sm"
+                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full sm:text-sm text-base"
                 placeholder="Santa Cruz, Davao del Sur"
               />
             </div>
@@ -272,7 +272,7 @@ export default function EmailSignatureGenerator() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full text-base sm:text-sm"
+                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full sm:text-sm text-base"
                 placeholder="your.email@example.com"
               />
             </div>
@@ -285,7 +285,7 @@ export default function EmailSignatureGenerator() {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full text-base sm:text-sm"
+                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full sm:text-sm text-base"
                 placeholder="+63 997 850 9514"
               />
             </div>
@@ -298,7 +298,7 @@ export default function EmailSignatureGenerator() {
                 type="text"
                 value={facebook}
                 onChange={(e) => setFacebook(e.target.value)}
-                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full text-base sm:text-sm"
+                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full sm:text-sm text-base"
                 placeholder="fb.com/yourpage"
               />
             </div>
@@ -311,10 +311,10 @@ export default function EmailSignatureGenerator() {
                 value={disclaimer}
                 onChange={(e) => setDisclaimer(e.target.value)}
                 rows={4}
-                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full resize-vertical text-base sm:text-sm leading-relaxed"
+                className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 focus:border-transparent rounded-lg focus:ring-2 focus:ring-blue-500 w-full sm:text-sm text-base leading-relaxed resize-vertical"
                 placeholder="Enter your confidentiality notice or disclaimer text..."
               />
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-gray-500 text-xs">
                 This text will appear in the disclaimer section of your email signature.
               </p>
             </div>
@@ -325,7 +325,7 @@ export default function EmailSignatureGenerator() {
             <label className="block mb-3 font-medium text-gray-700 text-sm">
               Brand Color
             </label>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <div className="flex sm:flex-row flex-col gap-3 sm:gap-4">
               {colorOptions.map((color) => (
                 <button
                   key={color.value}
@@ -337,12 +337,12 @@ export default function EmailSignatureGenerator() {
                   }`}
                 >
                   <div
-                    className="rounded-full w-6 h-6 flex-shrink-0"
+                    className="flex-shrink-0 rounded-full w-6 h-6"
                     style={{ backgroundColor: color.value }}
                   />
                   <span className="font-medium text-gray-700 text-sm">{color.name}</span>
                   {selectedColor === color.value && (
-                    <CheckCircle className="w-4 h-4 text-gray-800 flex-shrink-0" />
+                    <CheckCircle className="flex-shrink-0 w-4 h-4 text-gray-800" />
                   )}
                 </button>
               ))}
@@ -361,18 +361,18 @@ export default function EmailSignatureGenerator() {
               type="file"
               accept="image/*"
               onChange={handleImageUpload}
-              className="block hover:file:bg-blue-100 file:bg-blue-50 file:mr-3 sm:file:mr-4 file:px-3 sm:file:px-4 file:py-2 file:border-0 file:rounded w-full file:font-semibold text-gray-500 file:text-blue-700 text-sm file:text-sm cursor-pointer touch-manipulation"
+              className="block hover:file:bg-blue-100 file:bg-blue-50 sm:file:mr-4 file:mr-3 sm:file:px-4 file:px-3 file:py-2 file:border-0 file:rounded w-full file:font-semibold text-gray-500 file:text-blue-700 text-sm file:text-sm touch-manipulation cursor-pointer"
             />
             <p className="mt-3 text-gray-600 text-sm">
               💡 Tip: The image will be automatically optimized to 400px width for best performance. Use a square image for best results.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-3 mt-4 sm:mt-6">
+          <div className="flex sm:flex-row flex-col gap-3 sm:gap-3 mt-4 sm:mt-6">
             <button
               onClick={generateSignature}
               disabled={!imageBase64 || !name || !email || !phone}
-              className="disabled:bg-gray-300 px-6 py-4 sm:py-3 rounded-lg font-medium text-white transition-colors disabled:cursor-not-allowed w-full sm:w-auto text-base sm:text-sm touch-manipulation order-1"
+              className="order-1 disabled:bg-gray-300 px-6 py-4 sm:py-3 rounded-lg w-full sm:w-auto font-medium text-white sm:text-sm text-base transition-colors touch-manipulation disabled:cursor-not-allowed"
               style={{ 
                 backgroundColor: imageBase64 && name && email && phone ? selectedColor : undefined,
               }}
@@ -382,7 +382,7 @@ export default function EmailSignatureGenerator() {
             <button
               onClick={copySignature}
               disabled={!isGenerated}
-              className="flex items-center justify-center gap-2 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-300 px-6 py-4 sm:py-3 rounded-lg font-medium text-white transition-colors disabled:cursor-not-allowed w-full sm:w-auto text-base sm:text-sm touch-manipulation order-2"
+              className="flex justify-center items-center gap-2 order-2 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-300 px-6 py-4 sm:py-3 rounded-lg w-full sm:w-auto font-medium text-white sm:text-sm text-base transition-colors touch-manipulation disabled:cursor-not-allowed"
             >
               {copySuccess ? (
                 <>
@@ -421,7 +421,7 @@ export default function EmailSignatureGenerator() {
           <div className="space-y-4 sm:space-y-6">
             <div>
               <h3 className="mb-2 font-semibold text-gray-700 text-base sm:text-lg">Step 1: Enter Your Details</h3>
-              <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside text-sm sm:text-base">
+              <ul className="space-y-1 ml-4 text-gray-600 text-sm sm:text-base list-disc list-inside">
                 <li>Fill in your name, email, phone, and other details</li>
                 <li>Customize your disclaimer text if needed</li>
                 <li>Upload your profile photo (automatically optimized to <strong>400px width</strong>)</li>
@@ -430,7 +430,7 @@ export default function EmailSignatureGenerator() {
 
             <div>
               <h3 className="mb-2 font-semibold text-gray-700 text-base sm:text-lg">Step 2: Generate Your Signature</h3>
-              <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside text-sm sm:text-base">
+              <ul className="space-y-1 ml-4 text-gray-600 text-sm sm:text-base list-disc list-inside">
                 <li>Click the <strong>"Generate Signature"</strong> button</li>
                 <li>Preview your signature with your details and photo</li>
               </ul>
@@ -438,7 +438,7 @@ export default function EmailSignatureGenerator() {
 
             <div>
               <h3 className="mb-2 font-semibold text-gray-700 text-base sm:text-lg">Step 3: Copy and Paste</h3>
-              <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside text-sm sm:text-base">
+              <ul className="space-y-1 ml-4 text-gray-600 text-sm sm:text-base list-disc list-inside">
                 <li>Click <strong>"Copy Signature"</strong></li>
                 <li>Go to Gmail and compose a new email</li>
                 <li>Paste the signature <strong>directly below your email body</strong></li>
@@ -447,7 +447,7 @@ export default function EmailSignatureGenerator() {
 
             <div className="bg-white mt-4 p-3 sm:p-4 border border-amber-200 rounded">
               <h3 className="mb-2 font-semibold text-gray-700 text-base sm:text-lg">ℹ️ Important Notes:</h3>
-              <ul className="space-y-1 ml-4 text-gray-600 list-disc list-inside text-sm sm:text-base">
+              <ul className="space-y-1 ml-4 text-gray-600 text-sm sm:text-base list-disc list-inside">
                 <li><strong>Do not use Gmail Settings signature editor</strong> – the look may change due to Gmail's formatting.</li>
                 <li>Always paste the signature <strong>manually</strong> when sending emails.</li>
                 <li>If you've already used it before, you can also copy the signature from your <strong>previously sent emails</strong> instead of regenerating.</li>
