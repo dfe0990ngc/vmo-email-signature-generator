@@ -110,14 +110,14 @@ export default function EmailSignatureGenerator() {
               <div style={{ height: '2px', background: selectedColor, width: '60px', marginBottom: '12px' }} />
 
               <div style={{ margin: '0px 0', background: 'transparent' }}>
-                <span style={{ color: selectedColor }}>✉</span>{' '}
+                <img style={{display:"inline-block"}} src="https://res.cloudinary.com/duybphdbl/image/upload/v1759619667/email-blue_rk0zdk.png" width="16" height="16" alt="Email" />{' '}
                 <a href={`mailto:${email}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }}>
                   {email}
                 </a>
               </div>
 
               <div style={{ margin: '0px 0', background: 'transparent' }}>
-                <span style={{ color: selectedColor }}>📞</span>{' '}
+                <img style={{display:"inline-block"}} src="https://res.cloudinary.com/duybphdbl/image/upload/v1759619668/phone-blue_qpok67.png" width="16" height="16" alt="Phone" />{' '}
                 <a href={`tel:${phone.replace(/\s/g, '')}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }}>
                   {phone}
                 </a>
@@ -125,7 +125,7 @@ export default function EmailSignatureGenerator() {
 
               {facebook && (
                 <div style={{ margin: '0px 0', background: 'transparent' }}>
-                  <span style={{ color: selectedColor, fontWeight:'bold' }}>🌐</span>{' '}
+                  <img style={{display:"inline-block"}} src="https://res.cloudinary.com/duybphdbl/image/upload/v1759619668/facebook-blue_ijfdsg.png" width="16" height="16" alt="FB" />{' '}
                   <a 
                     href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
                     style={{ color: '#555', textDecoration: 'none', background: 'transparent', verticalAlign: 'middle' }} 
