@@ -176,30 +176,6 @@ export default function EmailSignatureGenerator() {
                 </div>
               )}
             </td>
-            {/* <td style={{ verticalAlign: 'top', background: 'transparent', paddingLeft:'20px' }}>
-              <table align="center" border={0}>
-                <tr>
-                  <td>
-                    <img 
-                      src={VmoLogo} 
-                      alt="Logo" 
-                      width="32"
-                      height="32"
-                      style={{ width: '32px', height: '32px', display: 'block', background: 'transparent' }}
-                    />
-                  </td>
-                  <td>
-                    <img 
-                      src={SBLogo} 
-                      alt="SB Logo" 
-                      width="36"
-                      height="42"
-                      style={{ width: '36px', height: '42px', display: 'block', background: 'transparent' }}
-                    />
-                  </td>
-                </tr>
-              </table>
-            </td> */}
           </tr>
         </tbody>
       </table>
@@ -222,7 +198,7 @@ export default function EmailSignatureGenerator() {
   ) : null;
 
   return (
-    <div className="bg-gray-50 px-2 sm:px-4 py-4 sm:py-8 min-h-screen">
+    <div className="px-2 sm:px-4 py-4 sm:py-8 min-h-screen">
       <div className="mx-auto max-w-4xl">
         {/* Header */}
         <div className="relative bg-white shadow-md mb-4 sm:mb-6 p-4 sm:p-8 rounded-lg">

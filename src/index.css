@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+    body{
+        @apply bg-gradient-to-br from-[#387ff1] to-[#5c81bd];
+    }
+}
