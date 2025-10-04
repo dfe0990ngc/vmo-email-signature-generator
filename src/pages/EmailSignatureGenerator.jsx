@@ -1,20 +1,15 @@
 import React, { useState, useRef } from 'react';
-import { Upload, Copy, CheckCircle, Mail, Phone, Facebook } from 'lucide-react';
-import VmoLogo from '../assets/OVM-Logo - Green - Approved.png';
+import { Upload, Copy, CheckCircle } from 'lucide-react';
 import VmoLogoOrig from '../assets/OVM-Logo.png';
-import SBLogo from '../assets/sb-logo.png';
-import VMOSB from '../assets/fb-cover-WITH-SB-LOGO-Left-Right-wrapped.png';
 import { uploadToCloudinary } from '../utils/cloudinary';
 
 export default function EmailSignatureGenerator() {
   const [cloudinaryUrl, setCloudinaryUrl] = useState(null);
-  const [originalImage, setOriginalImage] = useState(null);
   const [isGenerated, setIsGenerated] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
   const signatureRef = useRef(null);
-  const canvasRef = useRef(null);
 
   // Editable content
   const [name, setName] = useState('Legislative Department');
@@ -34,7 +29,6 @@ export default function EmailSignatureGenerator() {
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setOriginalImage(file);
       setUploadLoading(true);
       setUploadError(null);
       
@@ -42,7 +36,7 @@ export default function EmailSignatureGenerator() {
         const cloudinaryUrl = await uploadToCloudinary(file);
         setCloudinaryUrl(cloudinaryUrl);
       } catch (error) {
-        console.error('Error optimizing image with Cloudinary:', error);
+        console.error('Error uploading image to Cloudinary:', error);
         setUploadError(error.message);
       } finally {
         setUploadLoading(false);
@@ -151,7 +145,7 @@ export default function EmailSignatureGenerator() {
       <div style={{ marginTop: '8px', borderTop: '1px solid #e0e0e0', fontSize: '10px', color: '#888', lineHeight: '1.5', maxWidth: '500px', background: 'transparent' }}>
         {/* VMO & SB */}
         <img 
-          src={VMOSB} 
+          src="https://res.cloudinary.com/duybphdbl/image/upload/v1759618075/fb-cover-WITH-SB-LOGO-Left-Right-wrapped_sqkpxb.png" 
           alt="Logo" 
           width="100%"
           height="auto"
