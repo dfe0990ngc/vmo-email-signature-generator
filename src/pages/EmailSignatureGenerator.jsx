@@ -130,7 +130,7 @@ export default function EmailSignatureGenerator() {
                 alt="Profile" 
                 width="130"
                 height="130"
-                style={{ width: '130px', height: '130px', display: 'block', background: 'transparent',minWidth:'130px' }}
+                style={{ width: '130px', height: '130px', display: 'block', background: 'transparent',minWidth:'130px', objectFit: 'cover', objectPosition: 'top' }}
               />
             </td>
 
