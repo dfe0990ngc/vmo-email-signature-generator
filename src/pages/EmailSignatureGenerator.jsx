@@ -4,12 +4,15 @@ import VmoLogo from '../assets/OVM-Logo - Green - Approved.png';
 import VmoLogoOrig from '../assets/OVM-Logo.png';
 import SBLogo from '../assets/sb-logo.png';
 import VMOSB from '../assets/fb-cover-WITH-SB-LOGO-Left-Right-wrapped.png';
+import { uploadToCloudinary } from '../utils/cloudinary';
 
 export default function EmailSignatureGenerator() {
-  const [imageBase64, setImageBase64] = useState(null);
+  const [cloudinaryUrl, setCloudinaryUrl] = useState(null);
   const [originalImage, setOriginalImage] = useState(null);
   const [isGenerated, setIsGenerated] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
   const signatureRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -28,63 +31,27 @@ export default function EmailSignatureGenerator() {
     { value: '#b9847c', name: 'Brown' }
   ];
 
-  // Canvas-based image optimization function
-  const optimizeImage = (file) => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Calculate new dimensions (target width: 400px)
-        const targetWidth = 400;
-        const aspectRatio = img.height / img.width;
-        const targetHeight = targetWidth * aspectRatio;
-        
-        canvas.width = targetWidth;
-        canvas.height = targetHeight;
-        
-        // Fill with white background to avoid transparency issues
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(0, 0, targetWidth, targetHeight);
-        
-        // Draw the image on top of white background
-        ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
-        
-        // Convert to optimized base64 (JPEG with 0.85 quality for better compression while maintaining quality)
-        const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-        resolve(optimizedDataUrl);
-      };
-      
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        img.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
       setOriginalImage(file);
+      setUploadLoading(true);
+      setUploadError(null);
+      
       try {
-        const optimizedImage = await optimizeImage(file);
-        setImageBase64(optimizedImage);
+        const cloudinaryUrl = await uploadToCloudinary(file);
+        setCloudinaryUrl(cloudinaryUrl);
       } catch (error) {
-        console.error('Error optimizing image:', error);
-        // Fallback to original method
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          setImageBase64(event.target.result);
-        };
-        reader.readAsDataURL(file);
+        console.error('Error optimizing image with Cloudinary:', error);
+        setUploadError(error.message);
+      } finally {
+        setUploadLoading(false);
       }
     }
   };
 
   const generateSignature = () => {
-    if (imageBase64) {
+    if (cloudinaryUrl) {
       setIsGenerated(true);
     }
   };
@@ -118,7 +85,7 @@ export default function EmailSignatureGenerator() {
     document.body.removeChild(tempDiv);
   };
 
-  const signatureHTML = imageBase64 ? (
+  const signatureHTML = cloudinaryUrl ? (
     <div ref={signatureRef} style={{ background: 'transparent' }}>
       <table cellPadding="0" cellSpacing="0" style={{ fontFamily: 'Arial, sans-serif', fontSize: '12px', lineHeight: '1.6', color: '#333', background: 'transparent' }}>
         <tbody>
@@ -126,7 +93,7 @@ export default function EmailSignatureGenerator() {
             {/* Profile Image */}
             <td style={{ paddingRight: '20px', verticalAlign: 'top', background: 'transparent' }}>
               <img 
-                src={imageBase64} 
+                src={cloudinaryUrl} 
                 alt="Profile" 
                 width="130"
                 height="130"
@@ -342,18 +309,56 @@ export default function EmailSignatureGenerator() {
             <p className="mt-3 text-gray-600 text-sm">
               💡 Tip: The image will be automatically optimized to 400px width for best performance. Use a square image for best results.
             </p>
+            
+            {/* Upload Status */}
+            {uploadLoading && (
+              <div className="bg-blue-50 mt-3 p-3 border border-blue-200 rounded-lg">
+                <p className="flex items-center text-blue-700 text-sm">
+                  <svg className="mr-3 -ml-1 w-5 h-5 text-blue-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Optimizing image...
+                </p>
+              </div>
+            )}
+            
+            {uploadError && (
+              <div className="bg-red-50 mt-3 p-3 border border-red-200 rounded-lg">
+                <p className="text-red-700 text-sm">
+                  ❌ Upload failed: {uploadError}
+                </p>
+              </div>
+            )}
+            
+            {cloudinaryUrl && !uploadLoading && (
+              <div className="bg-green-50 mt-3 p-3 border border-green-200 rounded-lg">
+                <p className="flex items-center text-green-700 text-sm">
+                  <CheckCircle className="mr-2 w-4 h-4" />
+                  Image optimized successfully!
+                </p>
+                {/* Preview thumbnail */}
+                <div className="mt-2">
+                  <img 
+                    src={cloudinaryUrl} 
+                    alt="Upload preview" 
+                    className="border rounded w-20 h-20 object-cover"
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="flex sm:flex-row flex-col gap-3 sm:gap-3 mt-4 sm:mt-6">
             <button
               onClick={generateSignature}
-              disabled={!imageBase64 || !name || !email || !phone}
+              disabled={!cloudinaryUrl || !name || !email || !phone || uploadLoading}
               className="order-1 disabled:bg-gray-300 px-6 py-4 sm:py-3 rounded-lg w-full sm:w-auto font-medium text-white sm:text-sm text-base transition-colors touch-manipulation disabled:cursor-not-allowed"
               style={{ 
-                backgroundColor: imageBase64 && name && email && phone ? selectedColor : undefined,
+                backgroundColor: cloudinaryUrl && name && email && phone && !uploadLoading ? selectedColor : undefined,
               }}
             >
-              Generate Signature
+              {uploadLoading ? 'Uploading...' : 'Generate Signature'}
             </button>
             <button
               onClick={copySignature}
