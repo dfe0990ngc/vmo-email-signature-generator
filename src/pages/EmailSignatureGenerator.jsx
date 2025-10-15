@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, Copy, CheckCircle } from 'lucide-react';
+import { Upload, Copy, CheckCircle, Image as ImageIcon } from 'lucide-react';
 import VmoLogoOrig from '../assets/OVM-Logo.png';
 import { uploadToCloudinary } from '../utils/cloudinary';
 
@@ -31,7 +31,7 @@ export default function EmailSignatureGenerator() {
     if (file) {
       setUploadLoading(true);
       setUploadError(null);
-      
+
       try {
         const cloudinaryUrl = await uploadToCloudinary(file);
         setCloudinaryUrl(cloudinaryUrl);
@@ -54,10 +54,12 @@ export default function EmailSignatureGenerator() {
     if (!signatureRef.current) return;
 
     const signatureHTML = signatureRef.current.innerHTML;
-    
+
     const tempDiv = document.createElement('div');
-    tempDiv.style.position = 'fixed';
-    tempDiv.style.left = '-9999px';
+    // defensive wrapper: inline styles here too, so paste into Gmail keeps structure
+    tempDiv.setAttribute('style',
+      'position:fixed;left:-9999px;top:0;width:600px;overflow:hidden;'
+    );
     tempDiv.innerHTML = signatureHTML;
     document.body.appendChild(tempDiv);
 
@@ -79,83 +81,169 @@ export default function EmailSignatureGenerator() {
     document.body.removeChild(tempDiv);
   };
 
+  // ----------------------------
+  // Gmail-friendly signature HTML
+  // - table-first layout (most robust in Gmail)
+  // - absolutely positioned blocks inside a relatively-positioned cell for precise layout
+  // - every important attribute inline (fonts, font-size, line-height, color, display)
+  // - simplified structure for easier copying
+  // ----------------------------
   const signatureHTML = cloudinaryUrl ? (
-    <div ref={signatureRef} style={{ background: 'transparent' }}>
-      <table cellPadding="0" cellSpacing="0" style={{ fontFamily: 'Arial, sans-serif', fontSize: '12px', lineHeight: '1.6', color: '#333', background: 'transparent' }}>
-        <tbody>
-          <tr>
-            {/* Profile Image */}
-            <td style={{ paddingRight: '20px', verticalAlign: 'top', background: 'transparent' }}>
-              <img 
-                src={cloudinaryUrl} 
-                alt="Profile" 
-                width="130"
-                height="130"
-                style={{ width: '130px', height: '130px', display: 'block', background: 'transparent',minWidth:'130px', objectFit: 'cover', objectPosition: 'top' }}
-              />
-            </td>
+    <div ref={signatureRef}>
+      <div style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#333333', lineHeight: '1.2', fontSize: '14px', display: 'block' }}>
+        {/* Outer table wrapper */}
+        <table cellPadding="0" cellSpacing="0" border="0" width="600" style={{ maxWidth: '600px', width: '100%', borderCollapse: 'collapse', msoTableLspace: 0, msoTableRspace: 0 }}>
+          <tbody>
+            <tr>
+              <td style={{ padding: 0 }}>
+                {/* Use an inner table with fixed height to allow absolute positioning inside the left cell */
+                /* We keep markup minimal: left cell for image, right cell for content. */}
+                <table cellPadding="0" cellSpacing="0" border="0" width="100%" style={{ borderCollapse: 'collapse' }}>
+                  <tbody>
+                    <tr>
+                      {/* left column: relatively positioned container so child blocks can be absolutely placed */}
+                      <td width="140" valign="top" style={{ padding: '8px 12px 8px 0', verticalAlign: 'top', position: 'relative' }}>
+                        <div style={{ position: 'relative', width: '130px', height: '130px', display: 'block' }}>
+                          {/* Profile image: absolutely positioned so it stays fixed inside left column */}
+                          <img
+                            src={cloudinaryUrl}
+                            alt="Profile"
+                            width="130"
+                            height="130"
+                            style={{
+                              display: 'block',
+                              width: '130px',
+                              height: '130px',
+                              lineHeight: '1',
+                              border: '0',
+                              outline: 'none',
+                              textDecoration: 'none',
+                              objectFit: 'cover',
+                              borderRadius: '0'
+                            }}
+                          />
+                        </div>
+                      </td>
 
-            {/* User Info */}
-            <td style={{ verticalAlign: 'top', background: 'transparent' }}>
-              <div style={{ fontSize: '18px', fontWeight: 600, color: selectedColor, marginBottom: '0px', background: 'transparent' }}>
-                {name}
-              </div>
+                      {/* right column: main text block */}
+                      <td valign="top" style={{ padding: '12px 0 8px 6px', verticalAlign: 'top' }}>
+                        <div style={{ display: 'block', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '16px', fontWeight: 700, lineHeight: '1.15', color: selectedColor || '#387ff1', fontFamily: 'Arial, Helvetica, sans-serif', display: 'inline-block' }}>
+                            {name}
+                          </span>
+                        </div>
 
-              {location && (
-                <div style={{ fontWeight:'bold', fontSize: '13px', color: '#666', marginBottom: '0px', background: 'transparent' }}>
-                  {location}
-                </div>
-              )}
+                        {location && (
+                          <div style={{ fontSize: '12px', color: '#666666', fontWeight: 600, marginBottom: '8px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                            {location}
+                          </div>
+                        )}
 
-              <div style={{ height: '2px', background: selectedColor, width: '60px', marginBottom: '12px' }} />
+                        {/* simple divider — using an inline image to avoid Gmail stripping */}
+                        <div style={{ margin: '6px 0 10px 0' }}>
+                          <img
+                            src="https://res.cloudinary.com/duybphdbl/image/upload/v1760533782/blue-line_rgob95.png"
+                            width="120"
+                            height="3"
+                            alt=""
+                            style={{ display: 'block', border: '0', height: '3px', width: '120px', maxWidth: '100%' }}
+                          />
+                        </div>
 
-              <div style={{ margin: '0px 0', background: 'transparent' }}>
-                <img style={{display:"inline-block"}} src="https://res.cloudinary.com/duybphdbl/image/upload/v1759619667/email-blue_rk0zdk.png" width="16" height="16" alt="Email" />{' '}
-                <a href={`mailto:${email}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }}>
-                  {email}
-                </a>
-              </div>
+                        {/* Contacts: table for vertical alignment and stable rendering */}
+                        <table cellPadding="0" cellSpacing="0" border="0" style={{ borderCollapse: 'collapse', width: '100%' }}>
+                          <tbody>
+                            <tr>
+                              <td style={{ verticalAlign: 'middle', padding: '3px 0' }}>
+                                <img
+                                  src="https://res.cloudinary.com/duybphdbl/image/upload/v1759619667/email-blue_rk0zdk.png"
+                                  alt="Email"
+                                  width="14"
+                                  height="14"
+                                  style={{ display: 'inline-block', verticalAlign: 'middle', border: '0', marginRight: '8px' }}
+                                />
+                                <a href={`mailto:${email}`} style={{ color: '#555555', textDecoration: 'none', fontSize: '13px', fontFamily: 'Arial, Helvetica, sans-serif', verticalAlign: 'middle' }}>
+                                  &nbsp;{email}
+                                </a>
+                              </td>
+                            </tr>
 
-              <div style={{ margin: '0px 0', background: 'transparent' }}>
-                <img style={{display:"inline-block"}} src="https://res.cloudinary.com/duybphdbl/image/upload/v1759619668/phone-blue_qpok67.png" width="16" height="16" alt="Phone" />{' '}
-                <a href={`tel:${phone.replace(/\s/g, '')}`} style={{ color: '#555', textDecoration: 'none', background: 'transparent' }}>
-                  {phone}
-                </a>
-              </div>
+                            <tr>
+                              <td style={{ verticalAlign: 'middle', padding: '3px 0' }}>
+                                <img
+                                  src="https://res.cloudinary.com/duybphdbl/image/upload/v1759619668/phone-blue_qpok67.png"
+                                  alt="Phone"
+                                  width="14"
+                                  height="14"
+                                  style={{ display: 'inline-block', verticalAlign: 'middle', border: '0', marginRight: '8px' }}
+                                />
+                                <a href={`tel:${phone.replace(/\s/g, '')}`} style={{ color: '#555555', textDecoration: 'none', fontSize: '13px', fontFamily: 'Arial, Helvetica, sans-serif', verticalAlign: 'middle' }}>
+                                  &nbsp;{phone}
+                                </a>
+                              </td>
+                            </tr>
 
-              {facebook && (
-                <div style={{ margin: '0px 0', background: 'transparent' }}>
-                  <img style={{display:"inline-block"}} src="https://res.cloudinary.com/duybphdbl/image/upload/v1759619668/facebook-blue_ijfdsg.png" width="16" height="16" alt="FB" />{' '}
-                  <a 
-                    href={`https://${facebook.replace(/^https?:\/\//, '')}`} 
-                    style={{ color: '#555', textDecoration: 'none', background: 'transparent', verticalAlign: 'middle' }} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    {facebook}
-                  </a>
-                </div>
-              )}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-                
-      {/* Disclaimer */}
-      <div style={{ marginTop: '8px', borderTop: '1px solid #e0e0e0', fontSize: '10px', color: '#888', lineHeight: '1.5', maxWidth: '500px', background: 'transparent' }}>
-        {/* VMO & SB */}
-        <img 
-          src="https://res.cloudinary.com/duybphdbl/image/upload/v1759618075/fb-cover-WITH-SB-LOGO-Left-Right-wrapped_sqkpxb.png" 
-          alt="Logo" 
-          width="100%"
-          height="auto"
-          style={{ maxWidth: '500px', background: 'transparent', marginTop: '8px', marginBottom:'8px' }}
-        />
-        
-        {disclaimer}
+                            {facebook && (
+                              <tr>
+                                <td style={{ verticalAlign: 'middle', padding: '3px 0' }}>
+                                  <img
+                                    src="https://res.cloudinary.com/duybphdbl/image/upload/v1759619668/facebook-blue_ijfdsg.png"
+                                    alt="Facebook"
+                                    width="14"
+                                    height="14"
+                                    style={{ display: 'inline-block', verticalAlign: 'middle', border: '0', marginRight: '8px' }}
+                                  />
+                                  <a
+                                    href={`https://${facebook.replace(/^https?:\/\//, '')}`}
+                                    style={{ color: '#555555', textDecoration: 'none', fontSize: '13px', fontFamily: 'Arial, Helvetica, sans-serif', verticalAlign: 'middle' }}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    &nbsp;{facebook}
+                                  </a>
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+
+                    {/* Disclaimer row */}
+                    <tr>
+                      <td colSpan="2" style={{ paddingTop: '12px', paddingBottom: '6px' }}>
+                        <table cellPadding="0" cellSpacing="0" border="0" width="100%" style={{ borderCollapse: 'collapse' }}>
+                          <tbody>
+                            <tr>
+                              <td style={{ padding: '8px 0 0 0' }}>
+                                <img
+                                  src="https://res.cloudinary.com/duybphdbl/image/upload/v1759618075/fb-cover-WITH-SB-LOGO-Left-Right-wrapped_sqkpxb.png"
+                                  alt="VMO Logo"
+                                  width="500"
+                                  style={{ display: 'block', maxWidth: '100%', height: 'auto', border: '0' }}
+                                />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style={{ paddingTop: '8px' }}>
+                                <div style={{ fontSize: '11px', color: '#888888', lineHeight: '1.25', fontFamily: 'Arial, Helvetica, sans-serif', maxWidth: '500px' }}>
+                                  {disclaimer}
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-
   ) : null;
 
   return (
@@ -173,7 +261,7 @@ export default function EmailSignatureGenerator() {
         {/* Content Editor Section */}
         <div className="bg-white shadow-md mb-4 sm:mb-6 p-4 sm:p-8 rounded-lg">
           <h2 className="mb-4 sm:mb-6 font-semibold text-gray-800 text-lg sm:text-xl">✏️ Edit Signature Details</h2>
-          
+
           <div className="gap-4 sm:gap-6 grid grid-cols-1 md:grid-cols-2">
             <div>
               <label className="block mb-2 font-medium text-gray-700 text-sm">
@@ -303,7 +391,7 @@ export default function EmailSignatureGenerator() {
             <p className="mt-3 text-gray-600 text-sm">
               💡 Tip: The image will be automatically optimized to 400px width for best performance. Use a square image for best results.
             </p>
-            
+
             {/* Upload Status */}
             {uploadLoading && (
               <div className="bg-blue-50 mt-3 p-3 border border-blue-200 rounded-lg">
@@ -316,7 +404,7 @@ export default function EmailSignatureGenerator() {
                 </p>
               </div>
             )}
-            
+
             {uploadError && (
               <div className="bg-red-50 mt-3 p-3 border border-red-200 rounded-lg">
                 <p className="text-red-700 text-sm">
@@ -324,7 +412,7 @@ export default function EmailSignatureGenerator() {
                 </p>
               </div>
             )}
-            
+
             {cloudinaryUrl && !uploadLoading && (
               <div className="bg-green-50 mt-3 p-3 border border-green-200 rounded-lg">
                 <p className="flex items-center text-green-700 text-sm">
@@ -333,9 +421,9 @@ export default function EmailSignatureGenerator() {
                 </p>
                 {/* Preview thumbnail */}
                 <div className="mt-2">
-                  <img 
-                    src={cloudinaryUrl} 
-                    alt="Upload preview" 
+                  <img
+                    src={cloudinaryUrl}
+                    alt="Upload preview"
                     className="border rounded w-20 h-20 object-cover"
                   />
                 </div>
@@ -348,7 +436,7 @@ export default function EmailSignatureGenerator() {
               onClick={generateSignature}
               disabled={!cloudinaryUrl || !name || !email || !phone || uploadLoading}
               className="order-1 disabled:bg-gray-300 px-6 py-4 sm:py-3 rounded-lg w-full sm:w-auto font-medium text-white sm:text-sm text-base transition-colors touch-manipulation disabled:cursor-not-allowed"
-              style={{ 
+              style={{
                 backgroundColor: cloudinaryUrl && name && email && phone && !uploadLoading ? selectedColor : undefined,
               }}
             >
@@ -392,7 +480,7 @@ export default function EmailSignatureGenerator() {
         {/* Instructions */}
         <div className="bg-amber-50 shadow-md p-4 sm:p-8 border-amber-500 border-l-4 rounded-lg">
           <h2 className="mb-4 font-bold text-gray-800 text-lg sm:text-xl">📋 How to Use Your Signature:</h2>
-          
+
           <div className="space-y-4 sm:space-y-6">
             <div>
               <h3 className="mb-2 font-semibold text-gray-700 text-base sm:text-lg">Step 1: Enter Your Details</h3>
@@ -412,21 +500,26 @@ export default function EmailSignatureGenerator() {
             </div>
 
             <div>
-              <h3 className="mb-2 font-semibold text-gray-700 text-base sm:text-lg">Step 3: Copy and Paste</h3>
+              <h3 className="mb-2 font-semibold text-gray-700 text-base sm:text-lg">Step 3: Add to Gmail</h3>
               <ul className="space-y-1 ml-4 text-gray-600 text-sm sm:text-base list-disc list-inside">
                 <li>Click <strong>"Copy Signature"</strong></li>
-                <li>Go to Gmail and compose a new email</li>
-                <li>Paste the signature <strong>directly below your email body</strong></li>
+                <li>Go to Gmail Settings (⚙️) → <strong>"See all settings"</strong> → <strong>"General"</strong></li>
+                <li>Scroll down to the <strong>"Signature"</strong> section</li>
+                <li>Create a new signature or edit existing one</li>
+                <li>Paste the signature into the signature editor</li>
+                <li>Click <strong>"Save Changes"</strong> at the bottom</li>
               </ul>
             </div>
 
             <div className="bg-white mt-4 p-3 sm:p-4 border border-amber-200 rounded">
-              <h3 className="mb-2 font-semibold text-gray-700 text-base sm:text-lg">ℹ️ Important Notes:</h3>
+              <h3 className="mb-2 font-semibold text-gray-700 text-base sm:text-lg">✅ Gmail Compatible Features:</h3>
               <ul className="space-y-1 ml-4 text-gray-600 text-sm sm:text-base list-disc list-inside">
-                <li><strong>Do not use Gmail Settings signature editor</strong> – the look may change due to Gmail's formatting.</li>
-                <li>Always paste the signature <strong>manually</strong> when sending emails.</li>
-                <li>If you've already used it before, you can also copy the signature from your <strong>previously sent emails</strong> instead of regenerating.</li>
-                <li>Images are automatically optimized for faster loading and smaller file sizes.</li>
+                <li><strong>Now compatible with Gmail's signature editor!</strong> The styling is preserved when pasted.</li>
+                <li><strong>Responsive to Gmail's text size controls</strong> - Works with Small, Normal, Large, and Huge settings</li>
+                <li>Simplified HTML structure that works well with Gmail's formatting system</li>
+                <li>Properly formatted contact information with clickable links</li>
+                <li>Images are automatically optimized for faster loading</li>
+                <li>Alternative: You can still paste manually in emails if preferred</li>
               </ul>
             </div>
           </div>
